@@ -10,7 +10,7 @@ local delfile = delfile or function(file) writefile(file, '') end
 local function downloadFile(path, func)
 	if not isfile(path) then
 		local suc, res = pcall(function()
-			return game:HttpGet('https://raw.githubusercontent.com/0lyzll/HeliumV8/'..readfile('HeliumV6/profiles/commit.txt')..'/'..select(1, path:gsub('HeliumV6/', '')), true)
+			return game:HttpGet('https://raw.githubusercontent.com/0lyzll/HeliumV8/'..readfile('HeliumV8/profiles/commit.txt')..'/'..select(1, path:gsub('HeliumV8/', '')), true)
 		end)
 		if not suc or res == '404: Not Found' then error(res) end
 		if path:find('%.lua') then
@@ -31,22 +31,22 @@ local function wipeFolder(path)
 	end
 end
 
-for _, folder in {'HeliumV6', 'HeliumV6/games', 'HeliumV6/profiles', 'HeliumV6/assets', 'HeliumV6/libraries', 'HeliumV6/guis'} do
+for _, folder in {'HeliumV8', 'HeliumV8/games', 'HeliumV8/profiles', 'HeliumV8/assets', 'HeliumV8/libraries', 'HeliumV8/guis'} do
 	if not isfolder(folder) then makefolder(folder) end
 end
 
-if not isfile('HeliumV6/profiles/commit.txt') then
-	writefile('HeliumV6/profiles/commit.txt', 'main')
+if not isfile('HeliumV8/profiles/commit.txt') then
+	writefile('HeliumV8/profiles/commit.txt', 'main')
 end
 
 local function downloadPremadeProfiles(commit)
 	local httpService = game:GetService('HttpService')
-	if isfolder('HeliumV6/profiles/premade') then
-		for _, file in listfiles('HeliumV6/profiles/premade') do
+	if isfolder('HeliumV8/profiles/premade') then
+		for _, file in listfiles('HeliumV8/profiles/premade') do
 			pcall(function() if isfile(file) then delfile(file) end end)
 		end
 	else
-		makefolder('HeliumV6/profiles/premade')
+		makefolder('HeliumV8/profiles/premade')
 	end
 	local success, response = pcall(function()
 		return game:HttpGet('https://api.github.com/repos/0lyzll/HeliumV8/contents/profiles/premade?ref=' .. commit)
@@ -58,7 +58,7 @@ local function downloadPremadeProfiles(commit)
 				if file.name and file.name:find('.txt') and file.name ~= 'commit.txt' then
 					local baseName = (file.name:match('^(.-)%.txt$') or file.name):gsub('%d+$', '')
 					local fileId = (game.GameId == 2619619496) and game.GameId or game.PlaceId
-					local filePath = 'HeliumV6/profiles/premade/' .. baseName .. tostring(fileId) .. '.txt'
+					local filePath = 'HeliumV8/profiles/premade/' .. baseName .. tostring(fileId) .. '.txt'
 					local ds, dc = pcall(function() return game:HttpGet(file.download_url, true) end)
 					if ds and dc and dc ~= '404: Not Found' then writefile(filePath, dc) end
 				end
@@ -68,8 +68,8 @@ local function downloadPremadeProfiles(commit)
 end
 
 if not shared.VapeDeveloper then
-	local commit = isfile('HeliumV6/profiles/commit.txt') and readfile('HeliumV6/profiles/commit.txt') or ''
-	local latest = isfile('HeliumV6/profiles/latest.txt') and readfile('HeliumV6/profiles/latest.txt') or ''
+	local commit = isfile('HeliumV8/profiles/commit.txt') and readfile('HeliumV8/profiles/commit.txt') or ''
+	local latest = isfile('HeliumV8/profiles/latest.txt') and readfile('HeliumV8/profiles/latest.txt') or ''
 	if #commit ~= 40 then
 		local ok, res = pcall(function()
 			return game:HttpGet('https://api.github.com/repos/0lyzll/HeliumV8/commits/main', true)
@@ -80,7 +80,7 @@ if not shared.VapeDeveloper then
 		end
 		if #commit ~= 40 then commit = 'main' end
 		latest = commit
-		pcall(writefile, 'HeliumV6/profiles/latest.txt', latest)
+		pcall(writefile, 'HeliumV8/profiles/latest.txt', latest)
 	elseif #latest == 40 and latest ~= commit then
 		commit = latest
 	end
@@ -91,29 +91,29 @@ if not shared.VapeDeveloper then
 		if ok and res then
 			local h = res:match('"sha":"([a-f0-9]+)"')
 			if h and #h == 40 then
-				pcall(writefile, 'HeliumV6/profiles/latest.txt', h)
+				pcall(writefile, 'HeliumV8/profiles/latest.txt', h)
 			end
 		end
 	end)
-	if commit ~= 'main' and (isfile('HeliumV6/profiles/commit.txt') and readfile('HeliumV6/profiles/commit.txt') or '') ~= commit then
-		wipeFolder('HeliumV6')
-		wipeFolder('HeliumV6/games')
-		wipeFolder('HeliumV6/guis')
-		pcall(function() if isfile('HeliumV6/guis/new.lua') then delfile('HeliumV6/guis/new.lua') end end)
-		wipeFolder('HeliumV6/libraries')
-		if isfolder('HeliumV6/profiles/premade') then
-			for _, file in listfiles('HeliumV6/profiles/premade') do
+	if commit ~= 'main' and (isfile('HeliumV8/profiles/commit.txt') and readfile('HeliumV8/profiles/commit.txt') or '') ~= commit then
+		wipeFolder('HeliumV8')
+		wipeFolder('HeliumV8/games')
+		wipeFolder('HeliumV8/guis')
+		pcall(function() if isfile('HeliumV8/guis/new.lua') then delfile('HeliumV8/guis/new.lua') end end)
+		wipeFolder('HeliumV8/libraries')
+		if isfolder('HeliumV8/profiles/premade') then
+			for _, file in listfiles('HeliumV8/profiles/premade') do
 				pcall(function() if isfile(file) then delfile(file) end end)
 			end
 		end
 	end
-	local oldCommit = isfile('HeliumV6/profiles/commit.txt') and readfile('HeliumV6/profiles/commit.txt') or ''
-	writefile('HeliumV6/profiles/commit.txt', commit)
+	local oldCommit = isfile('HeliumV8/profiles/commit.txt') and readfile('HeliumV8/profiles/commit.txt') or ''
+	writefile('HeliumV8/profiles/commit.txt', commit)
 	local needPremade = (oldCommit ~= commit)
 	if not needPremade then
 		needPremade = true
-		if isfolder('HeliumV6/profiles/premade') then
-			for _ in listfiles('HeliumV6/profiles/premade') do
+		if isfolder('HeliumV8/profiles/premade') then
+			for _ in listfiles('HeliumV8/profiles/premade') do
 				needPremade = false
 				break
 			end
@@ -124,6 +124,6 @@ if not shared.VapeDeveloper then
 	end
 end
 
-return loadstring(downloadFile('HeliumV6/main.lua'), 'main')({
+return loadstring(downloadFile('HeliumV8/main.lua'), 'main')({
 	Closet = _args.Closet,
 })

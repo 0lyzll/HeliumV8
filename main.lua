@@ -4,7 +4,7 @@ if shared.vape then shared.vape:Uninject() end
 local LOADER_URL = "https://raw.githubusercontent.com/0lyzll/HeliumV8/main/downloader.lua" 
 local _initArgs = ...
 if type(_initArgs) ~= "table" then _initArgs = {} end
-shared.HeliumV6User = "spookers 👻"
+shared.HeliumV8User = "spookers 👻"
 
 if identifyexecutor then
 	if table.find({'Wave', 'Seliware', 'Volt'}, ({identifyexecutor()})[1]) then
@@ -73,7 +73,7 @@ local function downloadFile(path, func)
 		local success = false
 		for attempt = 1, 3 do
 			local suc, result = pcall(function()
-				return game:HttpGet('https://raw.githubusercontent.com/0lyzll/HeliumV8/' .. readfile('HeliumV6/profiles/commit.txt') .. '/' .. select(1, path:gsub('HeliumV6/', '')), true)
+				return game:HttpGet('https://raw.githubusercontent.com/0lyzll/HeliumV8/' .. readfile('HeliumV8/profiles/commit.txt') .. '/' .. select(1, path:gsub('HeliumV8/', '')), true)
 			end)
 			if suc and result ~= '404: Not Found' then
 				res = result
@@ -94,18 +94,18 @@ local function downloadFile(path, func)
 end
 
 local function migrateProfiles()
-	if isfile('HeliumV6/profiles/migrated_placeid.txt') then return end
+	if isfile('HeliumV8/profiles/migrated_placeid.txt') then return end
 
 	local oldId = tostring(game.GameId)
 	local newId = tostring(game.PlaceId)
 
 	if oldId == newId then
-		pcall(writefile, 'HeliumV6/profiles/migrated_placeid.txt', 'done')
+		pcall(writefile, 'HeliumV8/profiles/migrated_placeid.txt', 'done')
 		return
 	end
 
 	local suffix = oldId .. '.txt'
-	for _, path in ipairs(listfiles('HeliumV6/profiles')) do
+	for _, path in ipairs(listfiles('HeliumV8/profiles')) do
 		local name = path:gsub('\\', '/')
 		if name:sub(-#suffix) == suffix then
 			local newPath = name:sub(1, -#suffix - 1) .. newId .. '.txt'
@@ -115,8 +115,8 @@ local function migrateProfiles()
 		end
 	end
 
-	if isfolder('HeliumV6/profiles/premade') then
-		for _, path in ipairs(listfiles('HeliumV6/profiles/premade')) do
+	if isfolder('HeliumV8/profiles/premade') then
+		for _, path in ipairs(listfiles('HeliumV8/profiles/premade')) do
 			local name = path:gsub('\\', '/')
 			if name:sub(-#suffix) == suffix then
 				local newPath = name:sub(1, -#suffix - 1) .. newId .. '.txt'
@@ -127,7 +127,7 @@ local function migrateProfiles()
 		end
 	end
 
-	pcall(writefile, 'HeliumV6/profiles/migrated_placeid.txt', 'done')
+	pcall(writefile, 'HeliumV8/profiles/migrated_placeid.txt', 'done')
 end
 
 pcall(migrateProfiles)
@@ -135,7 +135,7 @@ pcall(migrateProfiles)
 local function finishLoading()
 	vape.Init = nil
 	if not vape.Load then
-		warn('[Helium v6] vape.Load is nil skipping load')
+		warn('[Helium v8] vape.Load is nil skipping load')
 		return
 	end
 	vape:Load()
@@ -186,21 +186,21 @@ local function finishLoading()
 	if not shared.vapereload then
 		if not vape.Categories then return end
 		if vape.Categories.Main.Options['GUI bind indicator'].Enabled then
-			vape:CreateNotification('[Helium v6] Finished Loading', 'wsg ' .. shared.HeliumV6User .. ' ' .. (vape.VapeButton and 'Press the button in the top right to open GUI' or 'Press ' .. table.concat(vape.Keybind, ' + '):upper() .. ' to open GUI'), 5)
+			vape:CreateNotification('[Helium v8] Finished Loading', 'wsg ' .. shared.HeliumV8User .. ' ' .. (vape.VapeButton and 'Press the button in the top right to open GUI' or 'Press ' .. table.concat(vape.Keybind, ' + '):upper() .. ' to open GUI'), 5)
 		end
 	end
 end
 
-if not isfile('HeliumV6/profiles/gui.txt') then
-	writefile('HeliumV6/profiles/gui.txt', 'new')
+if not isfile('HeliumV8/profiles/gui.txt') then
+	writefile('HeliumV8/profiles/gui.txt', 'new')
 end
-local gui = readfile('HeliumV6/profiles/gui.txt')
+local gui = readfile('HeliumV8/profiles/gui.txt')
 
-if not isfolder('HeliumV6/assets/' .. gui) then
-	makefolder('HeliumV6/assets/' .. gui)
+if not isfolder('HeliumV8/assets/' .. gui) then
+	makefolder('HeliumV8/assets/' .. gui)
 end
 
-local guiSource = downloadFile('HeliumV6/guis/' .. gui .. '.lua')
+local guiSource = downloadFile('HeliumV8/guis/' .. gui .. '.lua')
 local guiFunc, guiErr = loadstring(guiSource, 'gui')
 if not guiFunc then
 	local errMsg = tostring(guiErr)
@@ -218,18 +218,18 @@ if not guiFunc then
 		end
 		context = '\n\nContext:\n' .. table.concat(parts, '\n')
 	end
-	error('[Helium v6] syntax error in ' .. gui .. '.lua' .. '\n' .. errMsg .. context)
+	error('[Helium v8] syntax error in ' .. gui .. '.lua' .. '\n' .. errMsg .. context)
 end
 vape = guiFunc()
 if not vape then
-	error('[Helium v6] GUI returned nil file may be corrupted try deleting HeliumV6/guis/' .. gui .. '.lua and reinjecting.')
+	error('[Helium v8] GUI returned nil file may be corrupted try deleting HeliumV8/guis/' .. gui .. '.lua and reinjecting.')
 end
 if not vape.Load then
-	if delfile then pcall(function() delfile('HeliumV6/guis/' .. gui .. '.lua') end) end
-	error('[Helium v6] gui file corrupted (missing load) reinject..')
+	if delfile then pcall(function() delfile('HeliumV8/guis/' .. gui .. '.lua') end) end
+	error('[Helium v8] gui file corrupted (missing load) reinject..')
 end
 if not vape.Init and not vape.Load then
-	error('[Helium v6] failed to initialize properly reinject to fix this bs')
+	error('[Helium v8] failed to initialize properly reinject to fix this bs')
 end
 shared.vape = vape
 task.wait(0.1)
@@ -256,11 +256,11 @@ if getgenv().Closet then
 end
 
 if not shared.VapeIndependent then
-	loadstring(downloadFile('HeliumV6/games/universal.lua'), 'universal')()
+	loadstring(downloadFile('HeliumV8/games/universal.lua'), 'universal')()
 	local gameFileId = (game.GameId == 2619619496) and (game.PlaceId == 6872265039 and 6872265039 or 6872274481) or (game.GameId == 10516888336 and 10516888336 or game.PlaceId)
 
-	if isfile('HeliumV6/games/' .. gameFileId .. '.lua') then
-		local gameSrc = downloadFile('HeliumV6/games/' .. gameFileId .. '.lua')
+	if isfile('HeliumV8/games/' .. gameFileId .. '.lua') then
+		local gameSrc = downloadFile('HeliumV8/games/' .. gameFileId .. '.lua')
 		local gameFunc, gameErr = loadstring(gameSrc, tostring(gameFileId))
 		if not gameFunc then
 			local ls = gameSrc:split('\n')
@@ -298,16 +298,16 @@ if not shared.VapeIndependent then
 				end
 				ctx = '\n\naround here:\n' .. table.concat(parts, '\n')
 			end
-			error('[Helium v6] syntax error in ' .. gameFileId .. '.lua\n' .. msg .. where .. ctx)
+			error('[Helium v8] syntax error in ' .. gameFileId .. '.lua\n' .. msg .. where .. ctx)
 		end
 		gameFunc(...)
 	else
 		if not shared.VapeDeveloper then
 			local suc, res = pcall(function()
-				return game:HttpGet('https://raw.githubusercontent.com/0lyzll/HeliumV8/' .. readfile('HeliumV6/profiles/commit.txt') .. '/games/' .. gameFileId .. '.lua', true)
+				return game:HttpGet('https://raw.githubusercontent.com/0lyzll/HeliumV8/' .. readfile('HeliumV8/profiles/commit.txt') .. '/games/' .. gameFileId .. '.lua', true)
 			end)
 			if suc and res and res ~= '404: Not Found' then
-				local path = 'HeliumV6/games/' .. gameFileId .. '.lua'
+				local path = 'HeliumV8/games/' .. gameFileId .. '.lua'
 				if not isfile(path) then
 					writefile(path, '--This watermark is used to delete the file if its cached, remove it to make the file persist after vape updates.\n' .. res)
 				end

@@ -1,6 +1,6 @@
 local commit
 pcall(function()
-	commit = readfile('HeliumV6/profiles/commit.txt')
+	commit = readfile('HeliumV8/profiles/commit.txt')
 end)
 
 local function wipe(path)
@@ -14,14 +14,14 @@ local function wipe(path)
 	end
 end
 
-if isfolder('Helium v6') then
-	wipe('Helium v6')
+if isfolder('Helium v8') then
+	wipe('Helium v8')
 end
 
 pcall(function()
 	game:GetService('StarterGui'):SetCore('SendNotification', {
-		Title = 'Helium v6',
-		Text = 'deleted HeliumV6, reinjecting now',
+		Title = 'Helium v8',
+		Text = 'deleted HeliumV8, reinjecting now',
 		Duration = 4
 	})
 end)

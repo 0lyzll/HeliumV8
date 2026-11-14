@@ -1,7 +1,7 @@
 local loadstring = function(...)
 	local res, err = loadstring(...)
 	if err and vape then
-		vape:CreateNotification('Helium v6', 'Failed to load : '..err, 30, 'alert')
+		vape:CreateNotification('Helium v8', 'Failed to load : '..err, 30, 'alert')
 	end
 	return res
 end
@@ -14,7 +14,7 @@ end
 local function downloadFile(path, func)
 	if not isfile(path) then
 		local suc, res = pcall(function()
-			return game:HttpGet('https://raw.githubusercontent.com/0lyzll/HeliumV8/'..readfile('HeliumV6/profiles/commit.txt')..'/'..select(1, path:gsub('HeliumV6/', '')), true)
+			return game:HttpGet('https://raw.githubusercontent.com/0lyzll/HeliumV8/'..readfile('HeliumV8/profiles/commit.txt')..'/'..select(1, path:gsub('HeliumV8/', '')), true)
 		end)
 		if not suc or res == '404: Not Found' then
 			error(res)
@@ -73,7 +73,7 @@ local function addBlur(parent)
 	blur.Size = UDim2.new(1, 89, 1, 52)
 	blur.Position = UDim2.fromOffset(-48, -31)
 	blur.BackgroundTransparency = 1
-	blur.Image = getcustomasset('HeliumV6/assets/new/blur.png')
+	blur.Image = getcustomasset('HeliumV8/assets/new/blur.png')
 	blur.ScaleType = Enum.ScaleType.Slice
 	blur.SliceCenter = Rect.new(52, 31, 261, 502)
 	blur.Parent = parent
@@ -220,9 +220,9 @@ local function motorMove(target, cf)
 	task.delay(0, part.Destroy, part)
 end
 
-local hash = loadstring(downloadFile('HeliumV6/libraries/hash.lua'), 'hash')()
-local prediction = loadstring(downloadFile('HeliumV6/libraries/prediction.lua'), 'prediction')()
-entitylib = loadstring(downloadFile('HeliumV6/libraries/entity.lua'), 'entitylibrary')()
+local hash = loadstring(downloadFile('HeliumV8/libraries/hash.lua'), 'hash')()
+local prediction = loadstring(downloadFile('HeliumV8/libraries/prediction.lua'), 'prediction')()
+entitylib = loadstring(downloadFile('HeliumV8/libraries/entity.lua'), 'entitylibrary')()
 local whitelist = { get = function() return 0, true end, tag = function() return '' end, customtags = {}, isingame = function() return false end }
 vape.Libraries.entity = entitylib
 vape.Libraries.whitelist = whitelist
@@ -3293,7 +3293,7 @@ run(function()
 		arrow.BackgroundTransparency = 1
 		arrow.BorderSizePixel = 0
 		arrow.Visible = false
-		arrow.Image = getcustomasset('HeliumV6/assets/new/arrowmodule.png')
+		arrow.Image = getcustomasset('HeliumV8/assets/new/arrowmodule.png')
 		arrow.ImageColor3 = entitylib.getEntityColor(ent) or Color3.fromHSV(Color.Hue, Color.Sat, Color.Value)
 		arrow.Parent = Folder
 		Reference[ent] = arrow
@@ -5096,7 +5096,7 @@ run(function()
 	
 	Radar = vape:CreateOverlay({
 		Name = 'Radar',
-		Icon = getcustomasset('HeliumV6/assets/new/radaricon.png'),
+		Icon = getcustomasset('HeliumV8/assets/new/radaricon.png'),
 		Size = UDim2.fromOffset(14, 14),
 		Position = UDim2.fromOffset(12, 13),
 		Function = function(callback)
@@ -5316,7 +5316,7 @@ run(function()
 	
 	SessionInfo = vape:CreateOverlay({
 		Name = 'Session Info',
-		Icon = getcustomasset('HeliumV6/assets/new/textguiicon.png'),
+		Icon = getcustomasset('HeliumV8/assets/new/textguiicon.png'),
 		Size = UDim2.fromOffset(16, 12),
 		Position = UDim2.fromOffset(12, 14),
 		Function = function(callback)
@@ -5385,8 +5385,8 @@ run(function()
 	Hide = SessionInfo:CreateTextList({
 		Name = 'Blacklist',
 		Tooltip = 'Name of entry to hide.',
-		Icon = getcustomasset('HeliumV6/assets/new/blockedicon.png'),
-		Tab = getcustomasset('HeliumV6/assets/new/blockedtab.png'),
+		Icon = getcustomasset('HeliumV8/assets/new/blockedicon.png'),
+		Tab = getcustomasset('HeliumV8/assets/new/blockedtab.png'),
 		TabSize = UDim2.fromOffset(21, 16),
 		Color = Color3.fromRGB(250, 50, 56)
 	})
@@ -5955,7 +5955,7 @@ run(function()
 				
 				local ind = 1
 				repeat
-					local message = (#Lines.ListEnabled > 0 and Lines.ListEnabled[math.random(1, #Lines.ListEnabled)] or 'HeliumV6 on top')
+					local message = (#Lines.ListEnabled > 0 and Lines.ListEnabled[math.random(1, #Lines.ListEnabled)] or 'HeliumV8 on top')
 					if Mode.Value == 'Order' and #Lines.ListEnabled > 0 then
 						message = Lines.ListEnabled[ind] or Lines.ListEnabled[1]
 						ind = (ind % #Lines.ListEnabled) + 1

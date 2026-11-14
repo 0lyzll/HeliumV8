@@ -3,7 +3,7 @@
 local run = function(func)
 	local ok, err = pcall(func)
 	if not ok then
-		warn('[Helium v6] module failed: '..tostring(err))
+		warn('[Helium v8] module failed: '..tostring(err))
 	end
 end
 local cloneref = cloneref or function(obj) return obj end
