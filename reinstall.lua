@@ -28,4 +28,4 @@ end)
 
 task.wait(0.67)
 
-loadstring(game:HttpGet('https://raw.githubusercontent.com/heliumv8/HeliumV8/'..(commit or 'main')..'/main.lua', true))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/0lyzll/HeliumV8/'..(commit or 'main')..'/main.lua', true))()

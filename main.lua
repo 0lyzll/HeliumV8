@@ -1,7 +1,7 @@
 repeat task.wait() until game:IsLoaded()
 if shared.vape then shared.vape:Uninject() end
 
-local LOADER_URL = "https://raw.githubusercontent.com/heliumv8/HeliumV8/main/downloader.lua" 
+local LOADER_URL = "https://raw.githubusercontent.com/0lyzll/HeliumV8/main/downloader.lua" 
 local _initArgs = ...
 if type(_initArgs) ~= "table" then _initArgs = {} end
 shared.HeliumV6User = "spookers 👻"
@@ -73,7 +73,7 @@ local function downloadFile(path, func)
 		local success = false
 		for attempt = 1, 3 do
 			local suc, result = pcall(function()
-				return game:HttpGet('https://raw.githubusercontent.com/heliumv8/HeliumV8/' .. readfile('HeliumV6/profiles/commit.txt') .. '/' .. select(1, path:gsub('HeliumV6/', '')), true)
+				return game:HttpGet('https://raw.githubusercontent.com/0lyzll/HeliumV8/' .. readfile('HeliumV6/profiles/commit.txt') .. '/' .. select(1, path:gsub('HeliumV6/', '')), true)
 			end)
 			if suc and result ~= '404: Not Found' then
 				res = result
@@ -304,7 +304,7 @@ if not shared.VapeIndependent then
 	else
 		if not shared.VapeDeveloper then
 			local suc, res = pcall(function()
-				return game:HttpGet('https://raw.githubusercontent.com/heliumv8/HeliumV8/' .. readfile('HeliumV6/profiles/commit.txt') .. '/games/' .. gameFileId .. '.lua', true)
+				return game:HttpGet('https://raw.githubusercontent.com/0lyzll/HeliumV8/' .. readfile('HeliumV6/profiles/commit.txt') .. '/games/' .. gameFileId .. '.lua', true)
 			end)
 			if suc and res and res ~= '404: Not Found' then
 				local path = 'HeliumV6/games/' .. gameFileId .. '.lua'
